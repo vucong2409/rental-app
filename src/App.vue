@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="h-100">
+    <HeadBar user_name="Vu Cong" />
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import HeadBar from "./components/NavBar.vue"
+  import axios from "axios"; 
+  export default {
+    name : 'app',
+    components: {
+      HeadBar
+    }, 
+    data() {
+      return {
+        get_from_api : []
+      }
+    }, 
+    
+    mounted() {
+      axios.get("http://jsonplaceholder.typicode.com/posts")
+        .then(res => {
+          this.get_from_api = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+          
+    } 
+  }   
+  
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
