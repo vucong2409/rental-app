@@ -15,7 +15,7 @@
            <input type="password" class="form-control" v-model="password" />
          </div>
          <div class="mx-auto mb-4">
-           <button type="button" class="btn btn-info" @click="sendAPI()">Submit</button>
+           <mdb-btn gradient="purple" class="mb-4" rounded @click="sendAPI()">Submit</mdb-btn>
          </div>
          <div class="mx-auto mb-4">
            {{check_status}}
@@ -28,17 +28,20 @@
 
 <script>
 import axios from "axios"
+import {mdbBtn} from 'mdbvue'
   export default {
     name : 'login',
     components: {
+      mdbBtn
     }, 
     props : {
-      check_status : String,
-      username : String,
-      password : String 
     },
     data() {
       return {
+        check_status : "",
+        username : "",
+        password : "",
+        token : ""
       }
     },
      
@@ -50,13 +53,16 @@ import axios from "axios"
         }
         axios.post("http://localhost:8081/api/user/sign-in", user) 
              .then(res => {
-               this.check_status = res.data;
+                this.token = res.data 
+                this.$router.push('/about')
              })
              .catch(err => {
-               console.log(err)
+               if (err.response) {
+                 this.check_status = err.response.data.error
+               }
              })
       }
-    }
+    }, 
     
     
   }   

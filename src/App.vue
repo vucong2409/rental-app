@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100">
+  <div class="h-100 ">
     <HeadBar user_name="Vu Cong" />
     <router-view/>
   </div>
@@ -25,7 +25,7 @@
           this.get_from_api = res.data;
         })
         .catch(err => {
-          console.log(err);
+          this.err_log = err.response.data.errorMessage;
         })
           
     } 
